@@ -1,0 +1,32 @@
+{
+    "format_version": 2,
+    "header": {
+        "name": "StefUNDOlis Server Mod TS 1.1.4",
+        "description": "My behavior pack description",
+        "uuid": "066a6ed1-a619-4f4f-8619-73079f250d46",
+        "version": [1, 1, 3],
+        "min_engine_version": [1, 20, 30]
+    },
+    "modules": [
+        {
+            "description": "Script resources",
+            "language": "javascript",
+            "type": "script",
+            "uuid": "e1b619cb-73d7-4446-83be-11357626f529",
+            "version": [1, 1, 4],
+            "entry": "scripts/main.js"
+        },
+        {
+            "description": "Auch Creeper brennen bei Tageslicht, viele Mobs haben Angst vor Haustieren. Zusätzlich ist ein eigener Spielmodus, Tagesrhythmus, 24-Stunden Uhr und Schlaferkennung enthalten.",
+            "type": "data",
+            "uuid": "e3c3b9c1-9198-433a-826a-053c1070da30",
+            "version": [1, 9, 0]
+        }
+    ],
+    "dependencies": [
+        {
+            "module_name": "@minecraft/server",
+            "version": "1.5.0"
+        }
+    ]
+}
