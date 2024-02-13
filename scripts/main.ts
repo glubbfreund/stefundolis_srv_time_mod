@@ -25,8 +25,8 @@ function sleepNow() {
     players.forEach((player) => {
         if (player.dimension.id === "minecraft:overworld") {
             player.onScreenDisplay.setTitle("§6Guten Morgen!", {
-                stayDuration: 12,
-                fadeInDuration: 52,
+                stayDuration: 5,
+                fadeInDuration: 50,
                 fadeOutDuration: 50,
                 subtitle: "§7",
             });
@@ -56,12 +56,12 @@ function checkBeds() {
 }
 
 function checkNight() {
-    if (!playersInformed && daytime === 12542) {
+    if (!playersInformed && daytime > 12542 && daytime < 12642) {
         players = world.getAllPlayers();
         players.forEach((player) => {
             if (player.dimension.id === "minecraft:overworld") {
                 player.onScreenDisplay.setTitle("§5Vradiazi!", {
-                    stayDuration: 10,
+                    stayDuration: 5,
                     fadeInDuration: 50,
                     fadeOutDuration: 50,
                     subtitle: "§6Zeit die Betten aufzusuchen",
