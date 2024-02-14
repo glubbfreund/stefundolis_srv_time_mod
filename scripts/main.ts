@@ -1,4 +1,4 @@
-import { world, system, Dimension, Block } from "@minecraft/server";
+import { world, system, Dimension, Block, Player } from "@minecraft/server";
 
 let isNight = false;
 let playersInformed = false;
@@ -20,12 +20,7 @@ function sleepNow() {
     players = world.getAllPlayers();
     players.forEach((player) => {
         if (player.dimension.id === "minecraft:overworld") {
-            player.onScreenDisplay.setTitle("§6Guten Morgen!", {
-                stayDuration: 5,
-                fadeInDuration: 50,
-                fadeOutDuration: 50,
-                subtitle: "§7",
-            });
+            sendTitleToPlayer(player, "§6Guten Morgen!", "");
         }
     });
 }
@@ -55,16 +50,20 @@ function keepPlayersInformed() {
     if (isNight && !playersInformed) {
         players = world.getAllPlayers();
         players.forEach((player) => {
-            if (player.dimension.id === "minecraft:overworld") {
-                player.onScreenDisplay.setTitle("§5Vradiazi!", {
-                    stayDuration: 5,
-                    fadeInDuration: 50,
-                    fadeOutDuration: 50,
-                    subtitle: "§6Zeit die Betten aufzusuchen",
-                });
-            }
+            sendTitleToPlayer(player, "§5Vradiazi!", "§6Zeit die Betten aufzusuchen");
         });
         playersInformed = true;
+    }
+}
+
+function sendTitleToPlayer(player: Player, titleMsg: string, subtitleMsg: string) {
+    if (player.dimension.id === "minecraft:overworld") {
+        player.onScreenDisplay.setTitle(titleMsg, {
+            stayDuration: 5,
+            fadeInDuration: 50,
+            fadeOutDuration: 50,
+            subtitle: subtitleMsg,
+        });
     }
 }
 
@@ -109,22 +108,24 @@ function runClock() {
     else world.setTimeOfDay(world.getTimeOfDay() + 1);
 
     let clockColor = isNight ? "§t" : "§7";
+    let linebreaks = "\n\n\n\n\n\n\n\n\n\n\n\n";
+    let spaces =
+        "                                                                                                               ";
 
     players = world.getAllPlayers();
     players.forEach((player) => {
         player.dimension.id === "minecraft:overworld"
             ? player.onScreenDisplay.setActionBar(
                   clockColor +
-                      "\n\n\n\n\n\n\n\n\n\n\n\n                                                                                                               " +
+                      linebreaks +
+                      spaces +
                       float2int(hourTens).toString() +
                       float2int(hourSingle).toString() +
                       ":" +
                       float2int(minuteTens).toString() +
                       float2int(minuteSingle).toString()
               )
-            : player.onScreenDisplay.setActionBar(
-                  "§7\n\n\n\n\n\n\n\n\n\n\n\n                                                                                                               §k??:??"
-              );
+            : player.onScreenDisplay.setActionBar("§7" + linebreaks + spaces + "§k??:??");
     });
 }
 
