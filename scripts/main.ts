@@ -1,14 +1,11 @@
 import { world, system, Dimension, Block } from "@minecraft/server";
 
-let daytime = 0;
 let isNight = false;
 let playersInformed = false;
 let players = [];
 
 function mainTick() {
-    daytime = world.getTimeOfDay();
     checkNight();
-    if (isNight) checkBeds();
     if (system.currentTick % 8000 === 0) {
         resetWeather();
     }
@@ -19,7 +16,6 @@ function mainTick() {
 }
 
 function sleepNow() {
-    playersInformed = false;
     world.setTimeOfDay(23000);
     players = world.getAllPlayers();
     players.forEach((player) => {
@@ -55,13 +51,8 @@ function checkBeds() {
     if (playersInBed > 0 && playersInBed === playersInOverworld) sleepNow();
 }
 
-function checkNight() {
-    if (daytime > 12542 && daytime < 23000) {
-        isNight = true;
-    } else {
-        isNight = false;
-    }
-    if (!playersInformed && isNight) {
+function keepPlayersInformed() {
+    if (isNight && !playersInformed) {
         players = world.getAllPlayers();
         players.forEach((player) => {
             if (player.dimension.id === "minecraft:overworld") {
@@ -77,6 +68,18 @@ function checkNight() {
     }
 }
 
+function checkNight() {
+    let daytime = world.getTimeOfDay();
+    if (daytime > 12542 && daytime < 23000) {
+        isNight = true;
+        keepPlayersInformed();
+        checkBeds();
+    } else {
+        isNight = false;
+        playersInformed = false;
+    }
+}
+
 function float2int(value: number) {
     return value | 0;
 }
@@ -86,6 +89,8 @@ function resetWeather() {
 }
 
 function runClock() {
+    let daytime = world.getTimeOfDay();
+
     let hour, hourSingle: number, hourTens: number;
     let minute, minuteSingle: number, minuteTens: number;
 
