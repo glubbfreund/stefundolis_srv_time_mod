@@ -56,7 +56,12 @@ function checkBeds() {
 }
 
 function checkNight() {
-    if (!playersInformed && daytime > 12542 && daytime < 12642) {
+    if (daytime > 12542 && daytime < 23000) {
+        isNight = true;
+    } else {
+        isNight = false;
+    }
+    if (!playersInformed && isNight) {
         players = world.getAllPlayers();
         players.forEach((player) => {
             if (player.dimension.id === "minecraft:overworld") {
@@ -69,11 +74,6 @@ function checkNight() {
             }
         });
         playersInformed = true;
-    }
-    if (daytime > 12542 && daytime < 23000) {
-        isNight = true;
-    } else {
-        isNight = false;
     }
 }
 
