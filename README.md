@@ -1,6 +1,6 @@
 # Stef und Olis Server time mod
 
-This mod is the new version which doesnt use commandblocks and redstone. It uses the bedrock javascript API to make a custom daycycle with a clock on the bottom right. It also comes with some little custom entity behaviors.
+This mod is the new version which doesnt use commandblocks and redstone. It uses the bedrock javascript API to make a custom daycycle with a clock on the bottom right. 
 
 - Custom Daycycle (longer)
 - Clock on the bottom right
