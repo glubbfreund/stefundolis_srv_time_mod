@@ -87,6 +87,11 @@ function resetWeather() {
     world.getDimension("minecraft:overworld").runCommand("weather clear");
 }
 
+function dartMatchActive() {
+    let dartGameTable = world.scoreboard.getObjective("dartgame");
+    return dartGameTable?.isValid;
+}
+
 function runClock() {
     let daytime = world.getTimeOfDay();
 
@@ -104,10 +109,13 @@ function runClock() {
     minuteSingle = minute % 10;
     minuteTens = minute / 10;
 
-    if (daytime === 23999) world.setTimeOfDay(0);
-    else world.setTimeOfDay(world.getTimeOfDay() + 1);
+    if (!dartMatchActive()) {
+        if (daytime === 23999) world.setTimeOfDay(0);
+        else world.setTimeOfDay(world.getTimeOfDay() + 1);
+    }
 
     let clockColor = isNight ? "§t" : "§7";
+    let clockFormatting = dartMatchActive() ? "§o" : "";
     let linebreaks = "\n\n\n\n\n\n\n\n\n\n\n\n";
     let spaces =
         "                                                                                                               ";
@@ -117,6 +125,7 @@ function runClock() {
         player.dimension.id === "minecraft:overworld"
             ? player.onScreenDisplay.setActionBar(
                   clockColor +
+                      clockFormatting +
                       linebreaks +
                       spaces +
                       float2int(hourTens).toString() +
