@@ -50,7 +50,7 @@ function keepPlayersInformed() {
     if (isNight && !playersInformed) {
         players = world.getAllPlayers();
         players.forEach((player) => {
-            sendTitleToPlayer(player, "§5Vradiazi!", "§6Zeit die Betten aufzusuchen");
+            sendTitleToPlayer(player, "§tVradiazi!", "§7Zeit die Betten aufzusuchen");
         });
         playersInformed = true;
     }
