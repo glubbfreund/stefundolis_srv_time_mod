@@ -15,12 +15,30 @@ function mainTick() {
     system.run(mainTick);
 }
 
+function getRandomNumber(min: number, max: number) {
+    return float2int(Math.random() * (max - min)) + min;
+}
+
+function getRandomMessage() {
+    let messages = [
+        "Hab einen schönen Tag!",
+        "Lass dich nicht ärgern!",
+        "Geh' doch Dias schürfen...",
+        "Wie wäre es mit einer Partie Dart?",
+        "Heute schon gezaubert?",
+        "Schon mal mit der Unterwasserbahn gefahren?",
+        "war Christian schon da?",
+    ];
+
+    return messages[getRandomNumber(0, messages.length)];
+}
+
 function sleepNow() {
     world.setTimeOfDay(23000);
     players = world.getAllPlayers();
     players.forEach((player) => {
         if (player.dimension.id === "minecraft:overworld") {
-            sendTitleToPlayer(player, "§6Guten Morgen!", "");
+            sendTitleToPlayer(player, "§6Guten Morgen!", "§7" + getRandomMessage());
         }
     });
 }
