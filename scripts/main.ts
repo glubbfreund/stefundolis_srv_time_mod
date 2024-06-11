@@ -27,7 +27,9 @@ function getRandomMessage() {
         "Wie wäre es mit einer Partie Dart?",
         "Heute schon gezaubert?",
         "Schon mal mit der Unterwasserbahn gefahren?",
-        "war Christian schon da?",
+        "War Christian schon da?",
+        "Ist Dijego versorgt?",
+        "Bitte achte auf Creeper!"
     ];
 
     return messages[getRandomNumber(0, messages.length)];
